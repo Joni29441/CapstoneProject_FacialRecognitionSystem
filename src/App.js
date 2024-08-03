@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./Components/Navbar";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./Routes/Login";
+import Homepage from "./Routes/Homepage";
+import { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [token, setToken] = useState(localStorage.getItem('authToken'));
+
+    const handleLoginSuccess = (token) => {
+        setToken(token);
+        localStorage.setItem('authToken', token);
+    };
+
+    const handleLogout = () => {
+        setToken(null);
+        localStorage.removeItem('authToken');
+    };
+
+    useEffect(() => {
+        // Validate token if necessary
+        // Here you could add logic to validate the token with the server
+        const storedToken = localStorage.getItem('authToken');
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
+
+    return (
+        <>
+            <BrowserRouter>
+                <Navbar onLogout={handleLogout} />
+                <Routes>
+                    <Route path="/Homepage" element={<Homepage />} />
+                    <Route path="/Login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    );
 }
 
 export default App;
