@@ -19,32 +19,19 @@ function Login({ onLoginSuccess }) {
         };
         try {
             const response = await request(HttpMethods.post, HttpHeaders.BaseHeader, BaseURL.Login, payload);
-            console.log('Response:', response); // Log the response
+            console.log('Full Response:', response); // Log the full response
 
             if (response.ok) {
-                const { userId, token, roles } = response; // Assuming your response contains these fields
-                onLoginSuccess(token);
-                localStorage.setItem('userId', userId); // Store user ID if needed
-                localStorage.setItem('token', token); // Store token if needed
-
+                const { token, roles } = response; // Ensure these fields are correctly extracted
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('roles', JSON.stringify(roles));
+                onLoginSuccess(token, roles);
                 success('Successfully Logged In!');
 
-                // Ensure roles are checked properly
-                console.log('Roles:', roles); // Log the roles array
-                if (roles && roles.length > 0) {
-                    if (roles.includes('Admin')) {
-                        console.log('Redirecting to home for admin');
-                        navigate('/Homepage'); // Redirect to admin page
-                    } else if (roles.includes('Student')) {
-                        console.log('Redirecting to about us page for student');
-                        navigate('/AboutUs'); // Redirect to about us page
-                    } else {
-                        console.log('Redirecting to homepage');
-                        navigate('/Homepage'); // Default redirection if no roles or unknown role
-                    }
+                if (roles.includes('Admin')) {
+                    navigate('/Dashboard'); // Redirect to admin page
                 } else {
-                    console.log('Redirecting to homepage (no roles found)');
-                    navigate('/Homepage'); // Default redirection if roles array is empty
+                    navigate('/Homepage'); // Redirect to user page
                 }
             } else {
                 error('Login failed, Please Try Again');
@@ -52,7 +39,7 @@ function Login({ onLoginSuccess }) {
             }
         } catch (err) {
             error(err.message);
-            console.error('Login failed:', err);
+            console.log('Error:', err);
         }
     };
 

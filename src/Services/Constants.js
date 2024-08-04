@@ -1,3 +1,4 @@
+
 export const BaseURL = {
         Login: "https://localhost:7220/api/auth/login",
 }
@@ -12,7 +13,7 @@ export const HttpMethods = {
 
 export const HttpHeaders = {
     BaseHeader: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json",
     },
 
 }
