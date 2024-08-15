@@ -1,41 +1,38 @@
-// src/Services/ApiService.js
-import axios from 'axios';
+import axios from "axios";
 
-const request = async (method, headers, url, payload, params) => {
+const request = async (method, header, url, payload, params) => {
+    const token = localStorage.getItem('authToken');
 
+    console.log("Retrieved token:", token); // Debug: Log the token
+
+    // Dynamically add the Authorization header if a token exists
+    if (token) {
+        header = {
+            ...header, // Spread the existing headers
+            'Authorization': `Bearer ${token}`, // Add or overwrite the Authorization header
+        };
+    }
 
     try {
         const options = {
             method: method,
-            headers: headers,
+            headers: header,
             url: url,
             data: payload,
             params: params,
         };
 
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
+        console.log("Request Headers:", options.headers); // Debug: Check the headers
 
         const response = await axios(options);
 
-        console.log('Request options:', options); // Log the request options
-        console.log('Response:', response); // Log the full response
-
-        if (response.status >= 200 && response.status < 300) {
-            return {
-                ok: true,
-                ...response.data // Ensure this spreads the correct fields
-            };
+        if (response.data) {
+            return response.data.data || response.data;
         } else {
-            return {
-                ok: false,
-                ...response.data
-            };
+            return response;
         }
     } catch (error) {
-        console.log('Request error:', error); // Log the error
+        console.error("API request error:", error);
         throw error;
     }
 };

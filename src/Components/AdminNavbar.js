@@ -1,26 +1,42 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const AdminNavbar = ({ onLogout }) => {
-    const navigate = useNavigate();
-
+function AdminNavbar() {
     const handleLogout = () => {
-        onLogout();
-        navigate('/Login');
+        // Clear user-related data
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('roles');
+
     };
 
     return (
-        <nav className="bg-gray-800 p-4">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                    <Link to="/admin/dashboard" className="text-white">Dashboard</Link>
-                    <Link to="/admin/users" className="text-white">Users</Link>
-                    <Link to="/admin/settings" className="text-white">Settings</Link>
-                </div>
-                <button onClick={handleLogout} className="text-white">Logout</button>
+        <div className="h-screen w-60 bg-blue-900 text-white flex flex-col shadow-lg fixed">
+            <div className="flex items-center justify-center h-16 bg-blue-900 ">
+                <Link to="/admin-dashboard" className="text-2xl font-bold tracking-wide">Admin Dashboard</Link>
             </div>
-        </nav>
+            <div className="flex flex-col mt-10">
+                <Link to="/EnrollStudent" className="px-6 py-3 hover:bg-blue-600 transition-colors duration-200">
+                    Enroll Student
+                </Link>
+                <Link to="/retrieve-person" className="px-6 py-3 hover:bg-blue-600 transition-colors duration-200">
+                    Retrieve Student Details
+                </Link>
+                <Link to="/RetrieveAllStudents" className="px-6 py-3 hover:bg-blue-600 transition-colors duration-200">
+                    List All Students
+                </Link>
+                <Link to="/ListRooms" className="px-6 py-3 hover:bg-blue-600 transition-colors duration-200">
+                    List Rooms
+                </Link>
+
+            </div>
+            <button
+                onClick={handleLogout}
+                className="w-full text-left text-white hover:bg-red-700 px-4 py-2 rounded"
+            >
+                Logout
+            </button>
+        </div>
     );
-};
+}
 
 export default AdminNavbar;

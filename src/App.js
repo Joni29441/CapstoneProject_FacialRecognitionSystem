@@ -5,6 +5,11 @@ import Homepage from "./Routes/Homepage";
 import { useState, useEffect } from "react";
 import AdminDashboard from "./Routes/AdminDashboard";
 import AdminNavbar from "./Components/AdminNavbar";
+import CheckIn from "./Routes/CheckIn";
+import EnrollPerson from "./Routes/EnrollPerson";
+import RetrieveAllPerson from "./Routes/RetrieveAllPerson";
+import CreateCollection from "./Routes/CreateCollection";
+import ListRooms from "./Routes/ListRooms";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('authToken'));
@@ -41,8 +46,14 @@ function App() {
                 <Routes>
                     <Route path="/Homepage" element={<Homepage />} />
                     <Route path="/Login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-                    <Route path="/" element={<Navigate to={token ? "/Dashboard" : "/Login"} />} />
+                    <Route path="/" element={<Navigate to={token ? "/Dashboard" : "/Homepage"} />} />
                     <Route path="/Dashboard" element={<AdminDashboard />} />
+                    <Route path="/CheckIn" element={<CheckIn/>}/>
+                    <Route path="/EnrollStudent" element={<EnrollPerson />} />
+                    <Route path="/RetrieveAllStudents" element={<RetrieveAllPerson/>} />
+                    <Route path="/CreateCollection" element={<CreateCollection/>} />
+                    <Route path="ListRooms" element={<ListRooms/>}/>
+
                 </Routes>
             </BrowserRouter>
         </>
