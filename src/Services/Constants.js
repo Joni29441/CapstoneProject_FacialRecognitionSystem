@@ -9,8 +9,11 @@ export const BaseURL = {
     ListAllPersons : `${url}/v2/person`,
     addCollection: `${url}/collection`,
     deletePerson: `${url}/person`,
+    updatePerson: `${url}/person`,
     listRooms: `${url}/attendance/room`,
     deleteRoom:`${url}/attendance/room`,
+    addRoom: `${url}/attendance/room`,
+    viewPresence: `${url}/attendance/room`,
 }
 
 

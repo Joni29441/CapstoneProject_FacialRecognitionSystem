@@ -10,6 +10,8 @@ import EnrollPerson from "./Routes/EnrollPerson";
 import RetrieveAllPerson from "./Routes/RetrieveAllPerson";
 import CreateCollection from "./Routes/CreateCollection";
 import ListRooms from "./Routes/ListRooms";
+import Footer from "./Components/Footer";
+import ViewPresence from "./Routes/ViewPresence";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('authToken'));
@@ -53,8 +55,9 @@ function App() {
                     <Route path="/RetrieveAllStudents" element={<RetrieveAllPerson/>} />
                     <Route path="/CreateCollection" element={<CreateCollection/>} />
                     <Route path="ListRooms" element={<ListRooms/>}/>
-
+                    <Route path="/ViewPresence" element={<ViewPresence/>}/>
                 </Routes>
+                {isAdmin ? "" : <Footer/> }
             </BrowserRouter>
         </>
     );

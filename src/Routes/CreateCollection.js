@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 function CreateCollection() {
     const [collectionName, setCollectionName] = useState('');
-    const [urlParameter, setUrlParameter] = useState(''); // New state for the URL parameter
+    const [urlParameter, setUrlParameter] = useState('');
     const { success, error } = useToastify();
 
     const handleSubmit = async (e) => {
@@ -15,8 +15,6 @@ function CreateCollection() {
         const payload = {
             name: collectionName,
         };
-
-        // If you're providing a full URL
 
 
         try {

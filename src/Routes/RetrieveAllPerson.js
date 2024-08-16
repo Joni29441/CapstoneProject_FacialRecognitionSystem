@@ -3,15 +3,18 @@ import request from '../Services/ApiService';
 import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
 import useToastify from '../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
+import {deletePerson, listAllPersons} from "../Services/Services";
 
 function RetrieveAllPersons() {
     const [persons, setPersons] = useState([]);
+    const [selectedPerson, setSelectedPerson] = useState(null); // To hold the selected person for updating
+    const [newName, setNewName] = useState(''); // To hold the new name input
     const { success, error } = useToastify();
 
     useEffect(() => {
         const fetchPersons = async () => {
             try {
-                const response = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.ListAllPersons);
+                const response = await listAllPersons();
                 setPersons(response);
                 success('Students retrieved successfully');
             } catch (err) {
@@ -25,14 +28,11 @@ function RetrieveAllPersons() {
 
     const handleDelete = async (uuid) => {
         try {
-            const response = await request(HttpMethods.delete, HttpHeaders.LuxandHeader, BaseURL.deletePerson, {uuid});
+            const response = await deletePerson(uuid);
 
             console.log('Delete response:', response);
 
-            if (response && response.success) {
-                success('Person deleted successfully!');
-                setPersons((prevPersons) => prevPersons.filter(person => person.uuid !== uuid));
-            } else if (response && response.status === 204 || 200) {
+            if (response) {
                 success('Person deleted successfully!');
                 setPersons((prevPersons) => prevPersons.filter(person => person.uuid !== uuid));
             } else {
@@ -42,6 +42,35 @@ function RetrieveAllPersons() {
         } catch (err) {
             console.error('Request error:', err);
             error('An error occurred while deleting the person.');
+        }
+    };
+
+
+    const handleUpdate = async () => {
+        if (!selectedPerson || !newName) return;
+
+        try {
+            const url = `${BaseURL.updatePerson}/${selectedPerson.uuid}`;
+            const data = {
+                name: newName
+            };
+            const response = await request(HttpMethods.put, HttpHeaders.LuxandHeader, url, data);
+
+            if (response) {
+                success('Person updated successfully!');
+                setPersons((prevPersons) =>
+                    prevPersons.map((person) =>
+                        person.uuid === selectedPerson.uuid ? { ...person, name: newName } : person
+                    )
+                );
+                setSelectedPerson(null); // Close the modal
+            } else {
+                error('Failed to update person. Please try again.');
+                console.error('Unexpected API response:', response);
+            }
+        } catch (err) {
+            console.error('Request error:', err);
+            error('An error occurred while updating the person.');
         }
     };
 
@@ -77,12 +106,18 @@ function RetrieveAllPersons() {
                                         <td className="py-3 px-4">
                                             {person.faces.length > 0 ? person.faces.length : 'No faces found'}
                                         </td>
-                                        <td className="py-3 px-4">
+                                        <td className="py-3 px-4 space-x-2">
                                             <button
                                                 onClick={() => handleDelete(person.uuid)}
                                                 className="py-2 px-4 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                             >
                                                 Delete
+                                            </button>
+                                            <button
+                                                onClick={() => { setSelectedPerson(person); setNewName(person.name); }}
+                                                className="py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                            >
+                                                Update
                                             </button>
                                         </td>
                                     </tr>
@@ -100,6 +135,36 @@ function RetrieveAllPersons() {
                 </div>
                 <ToastContainer />
             </div>
+
+            {/* Modal for Updating Person */}
+            {selectedPerson && (
+                <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+                        <h2 className="text-2xl font-semibold mb-4">Update Person</h2>
+                        <label className="block text-sm font-medium text-gray-700">New Name</label>
+                        <input
+                            type="text"
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
+                            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                        />
+                        <div className="mt-4 flex justify-end space-x-2">
+                            <button
+                                onClick={() => setSelectedPerson(null)}
+                                className="py-2 px-4 bg-gray-600 text-white rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleUpdate}
+                                className="py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

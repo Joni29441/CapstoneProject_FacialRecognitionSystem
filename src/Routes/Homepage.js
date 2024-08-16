@@ -7,8 +7,7 @@ const Homepage = () => {
             {/* Hero Section */}
             <section className="bg-primary text-white py-20">
                 <div className="container mx-auto px-6 md:px-12 lg:px-24 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to Our Project</h1>
-                    <p className="text-lg md:text-xl">A Facial Recognition System for Student Attendance</p>
+                    <h1 className="text-4xl md:text-6xl font-bold mb-4">Attendance System Using Facial Recognition</h1>
                 </div>
             </section>
 
