@@ -27,19 +27,24 @@ function ViewPresence() {
 
     const handleRoomSelect = async (room) => {
         setSelectedRoom(room);
-        console.log(`Selected room: ${room.name} (UUID: ${room.uuid})`); // Log the selected room details
+        console.log(`Selected room: ${room.name} (UUID: ${room.uuid})`);
 
         try {
             const response = await request(HttpMethods.get, HttpHeaders.LuxandHeader, `${BaseURL.viewPresence}/${room.uuid}/presence`);
 
-            console.log('API response:', response); // Log the response from the API
+            console.log('API response:', response);
 
-            if (response && response.length > 0) {
-                setPresenceData(response);
+            if (response && response.presence.length > 0) {
+                setPresenceData(response.presence);
                 success(`Presence data for ${room.name} retrieved successfully.`);
+
+            } else if (response && response.presence.length === 0) {
+                setPresenceData([]);
+                success(`No presence data found for ${room.name}.`);
+
             } else {
                 setPresenceData([]);
-                error('No presence data found for this room.');
+                error('Failed to retrieve presence data. Please try again.');
             }
         } catch (err) {
             console.error('An error occurred while fetching presence data:', err);
@@ -49,7 +54,7 @@ function ViewPresence() {
 
     return (
         <div className="min-h-screen bg-gray-100 py-10 px-8">
-            <div className="max-w-7xl mx-auto">
+            <div className="flex-grow py-10 px-8 ml-64 mx-auto">
                 <h1 className="text-4xl font-bold text-center text-blue-800 mb-12">Select a Room to View Presence</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {rooms.length > 0 ? (
@@ -70,29 +75,43 @@ function ViewPresence() {
                     )}
                 </div>
 
-                {presenceData.length > 0 && (
+                {selectedRoom && (
                     <div className="mt-16">
-                        <h2 className="text-3xl font-semibold text-center text-blue-800 mb-8">Current Presence in {selectedRoom.name}</h2>
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white shadow-md rounded-lg">
-                                <thead className="bg-blue-900 text-white">
-                                <tr>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">UUID</th>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Check-In Time</th>
-                                </tr>
-                                </thead>
-                                <tbody className="text-gray-700">
-                                {presenceData.map(person => (
-                                    <tr key={person.uuid} className="hover:bg-gray-100">
-                                        <td className="py-3 px-4">{person.name}</td>
-                                        <td className="py-3 px-4">{person.uuid}</td>
-                                        <td className="py-3 px-4">{new Date(person.checkin_time).toLocaleString()}</td>
+                        <h2 className="text-3xl font-semibold text-center text-blue-800 mb-8">
+                            {presenceData.length > 0 ? `Current Presence in ${selectedRoom.name}` : `No Presence Data for ${selectedRoom.name}`}
+                        </h2>
+                        {presenceData.length > 0 ? (
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full bg-white shadow-md rounded-lg">
+                                    <thead className="bg-blue-900 text-white">
+                                    <tr>
+                                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Face</th>
+                                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">UUID</th>
+                                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Check-In Time</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody className="text-gray-700">
+                                    {presenceData.map(person => (
+                                        <tr key={person.uuid} className="hover:bg-gray-100">
+                                            <td className="py-3 px-4">{person.name || 'Unknown'}</td>
+                                            <td className="py-3 px-4">
+                                                <img
+                                                    src={person.face_url || '/default-avatar.png'}
+                                                    alt="Face"
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+                                            </td>
+                                            <td className="py-3 px-4">{person.uuid}</td>
+                                            <td className="py-3 px-4">{new Date(person.entered_at).toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ) : (
+                            <p className="text-center text-gray-700">There is no presence data available for this room.</p>
+                        )}
                     </div>
                 )}
 

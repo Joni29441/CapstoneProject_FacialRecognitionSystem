@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import request from '../Services/ApiService';  // Assuming this is the path to your request function
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants'; // Assuming these constants are defined
+import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
+import useToastify from "../Hooks/useToastify"; // Assuming these constants are defined
 
 function CheckIn() {
     const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [authorizedUser, setAuthorizedUser] = useState(null);
+    const { success, error } = useToastify();
+
 
     useEffect(() => {
         // Fetch all available rooms
@@ -44,17 +47,16 @@ function CheckIn() {
             return;
         }
 
-        const data = {
-            room: selectedRoom.uuid,
-            photo: photoUrl, // Use the photo URL provided by the camera
-        };
-
         try {
-            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.CheckIn, data);
+            const formData = new FormData();
+            formData.append('room', selectedRoom.uuid);
+            formData.append('photo', photoUrl); // If this needs to be a file, you'll have to convert it properly
+
+            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.CheckIn, formData);
             console.log('Check-in response:', response);
 
             if (response.status === 'success') {
-                console.log('Check-in successful!');
+                console.log('Check-in successful');
             } else {
                 console.error('Check-in failed:', response.message);
             }

@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
+import {BaseURL, HttpHeaders, HttpMethods} from '../Services/Constants';
 import useToastify from '../Hooks/useToastify';
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 
-function Login({ onLoginSuccess }) {
-    const { success, error } = useToastify();
+function Login({onLoginSuccess}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const {success, error} = useToastify();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const payload = { email, password };
+        const payload = {email, password};
 
         try {
             const response = await request(HttpMethods.post, HttpHeaders.BaseHeader, BaseURL.Login, payload);
@@ -26,11 +27,12 @@ function Login({ onLoginSuccess }) {
                 // Role-based redirection
 
                 if (response.roles.includes('Admin')) {
-                    navigate('/dashboard');
+                    navigate('/Dashboard');
                     success("Successfully Logged In");
+                } else if (response.roles.includes('Professor')) {
+                    navigate('/ProfessorDashboard');
                 } else {
-                    navigate('/Homepage');
-                    success("Successfully Logged In");
+                    error("Your Account does not Exist!");
 
                 }
 
@@ -69,7 +71,8 @@ function Login({ onLoginSuccess }) {
                             </div>
                         </div>
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                            <label htmlFor="password"
+                                   className="block text-sm font-medium text-gray-700">Password</label>
                             <div className="mt-1">
                                 <input
                                     type="password"
@@ -91,7 +94,7 @@ function Login({ onLoginSuccess }) {
                         </div>
                     </form>
                 </div>
-                <ToastContainer />
+                <ToastContainer/>
             </div>
         </div>
     );
