@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {FaChalkboardTeacher, FaUserGraduate, FaCalendarAlt, FaSignOutAlt} from 'react-icons/fa';
+import {FaChalkboardTeacher, FaUserGraduate, FaCalendarAlt, FaSignOutAlt, FaBell} from 'react-icons/fa';
 
 function ProfessorNavbar({handleLogout}) {
     return (
@@ -16,6 +16,10 @@ function ProfessorNavbar({handleLogout}) {
                         <Link to="/ViewClasses"
                               className="hover:bg-blue-700 px-3 py-2 rounded-md text-lg font-bold flex items-center">
                             <FaUserGraduate className="mr-2"/> View Classes
+                        </Link>
+                        <Link to="/ViewPresence"
+                              className="hover:bg-blue-700 px-3 py-2 rounded-md text-lg font-bold flex items-center">
+                            <FaBell className="mr-2"/> Attendance
                         </Link>
                         <Link to="/schedule"
                               className="hover:bg-blue-700 px-3 py-2 rounded-md text-lg font-bold flex items-center">

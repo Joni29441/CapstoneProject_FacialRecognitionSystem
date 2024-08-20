@@ -52,7 +52,6 @@ function Navigation() {
     const isAdmin = roles.includes('Admin');
     const isProfessor = roles.includes('Professor');
 
-    console.log('Render')
 
     return (
         <>

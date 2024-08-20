@@ -33,5 +33,4 @@ export const HttpHeaders = {
     LuxandHeader: {
         "token": "e3607d3c7ec0443db6b792072d5668f7", // Token for Luxand API
     },
-
 }

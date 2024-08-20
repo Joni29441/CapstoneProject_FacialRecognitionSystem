@@ -4,7 +4,7 @@ import Navigation from "./Routes/Navigation";
 function App() {
     return (
         <BrowserRouter>
-            <Navigation />;
+            <Navigation />
         </BrowserRouter>
     );
 }

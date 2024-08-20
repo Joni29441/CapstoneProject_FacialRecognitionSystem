@@ -4,46 +4,54 @@ import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
 import useToastify from '../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
 
-function AddCollection() {
+function CreateCollection() {
     const [collectionName, setCollectionName] = useState('');
     const { success, error } = useToastify();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!collectionName.trim()) {
-            error('Please provide a valid collection name.');
-            return;
-        }
-
         const data = {
             name: collectionName.trim(),
         };
 
-        console.log('Data being sent:', JSON.stringify(data)); // Log the request data
+        console.log("Data being sent:", data);
 
         try {
-            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addCollection, data);
+            // Merging the BaseHeader and LuxandHeader
+            const headers = {
+                ...HttpHeaders.BaseHeader,
+                ...HttpHeaders.LuxandHeader,
+                'Content-Type': 'application/json',
+            };
 
-            if (response && response.status === 'success') {
-                success('Collection added successfully!');
-                setCollectionName(''); // Clear the input field
+            console.log("Headers being sent:", headers);
+            console.log("URL being hit:", BaseURL.addCollection);
+
+            const response = await request(HttpMethods.post, headers, BaseURL.addCollection, data);
+
+            console.log("API Response:", response);
+
+            if (response && response.collection) {
+                success('Collection created successfully!');
+                setCollectionName(''); // Reset the form field
             } else {
-                error('Failed to add collection. Please try again.');
+                error(`Failed to create collection: ${response?.message || 'Unknown error'}`);
                 console.error('Unexpected API response:', response);
             }
         } catch (err) {
-            console.error('An error occurred while adding the collection:', err);
-            error('An error occurred. Please try again.');
+            console.error('An error occurred while creating the collection:', err);
+            error('Failed to create collection. Please try again.');
         }
     };
+
     return (
         <div className="min-h-screen bg-gray-100 py-10 flex justify-center items-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Add a New Collection</h2>
+            <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+                <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Create a Collection</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="collectionName" className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="collectionName">
                             Collection Name
                         </label>
                         <input
@@ -51,21 +59,22 @@ function AddCollection() {
                             id="collectionName"
                             value={collectionName}
                             onChange={(e) => setCollectionName(e.target.value)}
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter collection name"
+                            required
                         />
                     </div>
                     <button
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
-                        Add Collection
+                        Create Collection
                     </button>
                 </form>
-                <ToastContainer />
             </div>
+            <ToastContainer />
         </div>
     );
 }
 
-export default AddCollection;
+export default CreateCollection;
