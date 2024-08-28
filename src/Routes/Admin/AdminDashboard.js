@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from '../Hooks/useToastify';
-import { listAllRooms } from "../Services/Services";
+import request from '../../Services/ApiService';
+import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import useToastify from '../../Hooks/useToastify';
+import { listAllRooms } from "../../Services/Services";
 import { FaUser, FaDoorOpen, FaClipboardList, FaCheckCircle } from 'react-icons/fa';
 
 function AdminDashboard() {
@@ -17,16 +17,17 @@ function AdminDashboard() {
             try {
                 // Fetch total persons
                 const personsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.ListAllPersons);
-                setTotalPersons(personsResponse.length || 0);
+                setTotalPersons(personsResponse.length);
 
                 // Fetch total rooms
                 const roomsResponse = await listAllRooms();
-                setTotalRooms(roomsResponse.length || 0);
+                setTotalRooms(roomsResponse.length);
 
 
                 // Fetch total collections
                 const collectionsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listCollections);
-                setTotalCollections(collectionsResponse.length || 0);
+                setTotalCollections(collectionsResponse.length);
+                console.log("collection response", collectionsResponse);
 
                 let totalCheckIns = 0;
 

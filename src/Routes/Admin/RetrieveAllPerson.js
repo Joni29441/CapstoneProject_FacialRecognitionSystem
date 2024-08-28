@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from '../Hooks/useToastify';
+import request from '../../Services/ApiService';
+import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
-import {deletePerson, listAllPersons} from "../Services/Services";
+import {deletePerson, listAllPersons} from "../../Services/Services";
 
 function RetrieveAllPersons() {
     const [persons, setPersons] = useState([]);
-    const [selectedPerson, setSelectedPerson] = useState(null); // To hold the selected person for updating
-    const [newName, setNewName] = useState(''); // To hold the new name input
+    const [selectedPerson, setSelectedPerson] = useState(null);
+    const [newName, setNewName] = useState('');
     const { success, error } = useToastify();
 
     useEffect(() => {
@@ -30,11 +30,8 @@ function RetrieveAllPersons() {
         try {
             const response = await deletePerson(uuid);
 
-            console.log('Delete response:', response);
-
             if (response) {
                 success('Person deleted successfully!');
-                setPersons((prevPersons) => prevPersons.filter(person => person.uuid !== uuid));
             } else {
                 error('Failed to delete person. Please try again.');
                 console.error('Unexpected API response:', response);
@@ -63,7 +60,7 @@ function RetrieveAllPersons() {
                         person.uuid === selectedPerson.uuid ? { ...person, name: newName } : person
                     )
                 );
-                setSelectedPerson(null); // Close the modal
+                setSelectedPerson(null);
             } else {
                 error('Failed to update person. Please try again.');
                 console.error('Unexpected API response:', response);
@@ -76,7 +73,7 @@ function RetrieveAllPersons() {
 
     return (
         <div className="min-h-screen bg-gray-100 flex">
-            <div className="flex-grow py-10 px-8 ml-64"> {/* Adjusted for the sidebar width */}
+            <div className="flex-grow py-10 px-8 ml-64">
                 <div className="max-w-full mx-auto">
                     <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">All Registered Students</h2>
                     <div className="overflow-x-auto">
@@ -86,7 +83,7 @@ function RetrieveAllPersons() {
                                 <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Photo</th>
                                 <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
                                 <th className="text-left py-3 px-4 uppercase font-semibold text-sm">UUID</th>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Faces</th>
+                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Degree</th>
                                 <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                             </thead>
@@ -104,7 +101,10 @@ function RetrieveAllPersons() {
                                         <td className="py-3 px-4">{person.name}</td>
                                         <td className="py-3 px-4">{person.uuid}</td>
                                         <td className="py-3 px-4">
-                                            {person.faces.length > 0 ? person.faces.length : 'No faces found'}
+                                            {person.collections
+                                                .filter(collection => collection.name.trim() === "Computer Sciences")
+                                                .map(collection => collection.name)
+                                            }
                                         </td>
                                         <td className="py-3 px-4 space-x-2">
                                             <button

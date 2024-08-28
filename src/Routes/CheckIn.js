@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import request from '../Services/ApiService';  // Assuming this is the path to your request function
+import request from '../Services/ApiService';
 import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from "../Hooks/useToastify"; // Assuming these constants are defined
+import useToastify from "../Hooks/useToastify";
+import {ToastContainer} from "react-toastify";
 
 function CheckIn() {
     const [rooms, setRooms] = useState([]);
@@ -11,14 +12,12 @@ function CheckIn() {
 
 
     useEffect(() => {
-        // Fetch all available rooms
         const fetchRooms = async () => {
             try {
                 const response = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listRooms);
-                console.log("Rooms fetched: ", response);
-                setRooms(response); // Assuming the API returns an array of rooms
-            } catch (error) {
-                console.error('Failed to fetch rooms:', error);
+                setRooms(response);
+            } catch (err) {
+                error('Failed to fetch rooms:', err);
             }
         };
 
@@ -27,21 +26,17 @@ function CheckIn() {
 
     const handleRoomSelect = (room) => {
         setSelectedRoom(room);
-        console.log("Selected room: ", room);
-        // Reset authorized user when a new room is selected
         setAuthorizedUser(null);
     };
 
     const handleAuthorization = (event) => {
         if (event.origin === 'https://attendance.luxand.cloud' && event.data.status === 'authorized') {
-            console.log('User is authorized:', event.data);
             setAuthorizedUser(event.data); // Save authorized user's data including their photo URL
-            // Proceed to check-in using the authorized user's data
             performCheckIn(event.data.uuid, event.data.faces[0].url);
         }
     };
 
-    const performCheckIn = async (userId, photoUrl) => {
+    const performCheckIn = async (userId, test) => {
         if (!selectedRoom) {
             console.error('No room selected');
             return;
@@ -50,15 +45,15 @@ function CheckIn() {
         try {
             const formData = new FormData();
             formData.append('room', selectedRoom.uuid);
-            formData.append('photo', photoUrl); // If this needs to be a file, you'll have to convert it properly
+            formData.append('photo', test);
 
             const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.CheckIn, formData);
             console.log('Check-in response:', response);
 
             if (response.status === 'success') {
-                console.log('Check-in successful');
+                success("Successfully Checked-In");
             } else {
-                console.error('Check-in failed:', response.message);
+                error('Check-in failed:');
             }
         } catch (error) {
             console.error('An error occurred during check-in:', error);
@@ -68,7 +63,6 @@ function CheckIn() {
     useEffect(() => {
         window.addEventListener('message', handleAuthorization);
 
-        // Clean up the event listener on component unmount
         return () => {
             window.removeEventListener('message', handleAuthorization);
         };
@@ -114,7 +108,9 @@ function CheckIn() {
                     </div>
                 </div>
             )}
+            <ToastContainer/>
         </div>
+
     );
 }
 

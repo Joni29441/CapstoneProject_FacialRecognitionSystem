@@ -19,10 +19,10 @@ const Homepage = () => {
                         <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
                             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
                                 <img src="/photos/attendance.jpg" alt="System Interface" className="w-full h-48 object-cover" />
-                                <div className="p-6">
+                                <div className="p-6 border-t-2">
                                     <h3 className="text-xl font-semibold mb-3">System Interface</h3>
                                     <p className="text-gray-700">
-                                        A user-friendly interface designed for seamless interaction. The system dashboard allows for easy navigation and quick access to attendance records.
+                                        A user-friendly interface is designed for seamless interaction and navigation. The system dashboard allows for easy navigation and quick access to attendance records.
                                     </p>
                                 </div>
                             </div>
@@ -30,10 +30,10 @@ const Homepage = () => {
                         <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
                             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
                                 <img src="/photos/facialrecognition.png" alt="Technology in Action" className="w-full h-48 object-cover" />
-                                <div className="p-6">
+                                <div className="p-6 border-t-2">
                                     <h3 className="text-xl font-semibold mb-3">Technology</h3>
-                                    <p className="text-gray-700">
-                                        The facial recognition technology in action, capturing and identifying students in real-time to mark their attendance accurately and efficiently.
+                                    <p className="text-gray-700 ">
+                                        The facial recognition technology which is used in this project, captures and identifies students in real-time to mark their attendance accurately and efficiently.
                                     </p>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@ const Homepage = () => {
                         <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
                             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
                                 <img src="/photos/machinelearning.jpg" alt="Implementation Details" className="w-full h-48 object-contain" />
-                                <div className="p-6">
+                                <div className="p-6 border-t-2">
                                     <h3 className="text-xl font-semibold mb-3">Implementation Details</h3>
                                     <p className="text-gray-700">
                                         This project is built using advanced machine learning algorithms and modern web technologies. The system leverages cloud computing for scalability and reliability.

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from '../Hooks/useToastify';
+import request from '../../Services/ApiService';
+import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
 
 function EnrollPerson() {

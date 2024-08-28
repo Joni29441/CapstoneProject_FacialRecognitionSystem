@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import request from '../Services/ApiService';
 import {BaseURL, HttpHeaders, HttpMethods} from '../Services/Constants';
 import useToastify from '../Hooks/useToastify';
 import {ToastContainer} from 'react-toastify';
+import {UserContext} from "../Context/UserContext";
 
 function Login({onLoginSuccess}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
     const {success, error} = useToastify();
-
+    const navigate = useNavigate();
+    const { setUser, user } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,24 +19,24 @@ function Login({onLoginSuccess}) {
 
         try {
             const response = await request(HttpMethods.post, HttpHeaders.BaseHeader, BaseURL.Login, payload);
-            console.log("Login Response:", response); // Debug: Log the full response
+            console.log("Login Response:", response);
 
             if (response.token) {
                 localStorage.setItem('authToken', response.token);
                 onLoginSuccess(response.token, response.roles);
+                setUser({ email: payload.email, roles: response.roles, ...user});
                 success("Successfully Logged In");
-                // Role-based redirection
 
                 if (response.roles.includes('Admin')) {
                     navigate('/Dashboard');
                     success("Successfully Logged In");
                 } else if (response.roles.includes('Professor')) {
                     navigate('/ProfessorDashboard');
+                } else if (response.roles.includes('Student')) {
+                    navigate('/StudentDashboard');
                 } else {
                     error("Your Account does not Exist!");
-
                 }
-
             } else {
                 console.error("Token is missing in the response");
             }
@@ -47,7 +48,7 @@ function Login({onLoginSuccess}) {
 
     return (
         <div className="min-h-screen flex">
-            <div className="w-1/2 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+            <div className="w-1/2 bg-gradient-to-r from-primary to-blue-200 flex items-center justify-center">
                 <div className="text-white text-center">
                     <h1 className="text-5xl font-bold mb-4">Welcome Back!</h1>
                     <p className="text-lg">Manage your students with ease and efficiency.</p>

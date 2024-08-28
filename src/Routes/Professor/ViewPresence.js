@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from '../Hooks/useToastify';
+import request from '../../Services/ApiService';
+import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
 
 function ViewPresence() {
@@ -103,7 +103,7 @@ function ViewPresence() {
                                             <td className="py-3 px-4">{person.name || 'Unknown'}</td>
                                             <td className="py-3 px-4">
                                                 <img
-                                                    src={person.face_url || '/default-avatar.png'}
+                                                    src={person.face_url}
                                                     alt="Face"
                                                     className="w-12 h-12 rounded-full object-cover border-2 border-blue-200"
                                                 />

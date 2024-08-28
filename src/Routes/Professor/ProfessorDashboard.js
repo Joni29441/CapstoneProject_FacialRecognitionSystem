@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {FaChalkboardTeacher, FaUser} from 'react-icons/fa';
-import {listAllPersons, listAllRooms} from "../Services/Services";
-import useToastify from "../Hooks/useToastify";
+import {listAllPersons, listAllRooms} from "../../Services/Services";
+import useToastify from "../../Hooks/useToastify";
 import {ToastContainer} from "react-toastify";
+import {UserContext} from "../../Context/UserContext";
 
 function ProfessorDashboard() {
     const [rooms, setRooms] = useState([]);
     const [students, setStudents] = useState([]);
     const { error } = useToastify();
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         const fetchRooms = async () => {
@@ -33,7 +35,7 @@ function ProfessorDashboard() {
         <div className="min-h-screen flex bg-gradient-to-r from-blue-50 to-gray-100">
             <div className="flex-grow py-28 px-8 mx-auto">
                 <header className="mb-8">
-                    <h2 className="text-4xl font-bold text-gray-800">Welcome, Professor!</h2>
+                    <h2 className="text-4xl font-semibold text-center text-gray-800 mb-4">Welcome, {user.email}</h2>
                     <p className="text-lg text-gray-600">Here’s an overview of your teaching activities.</p>
                 </header>
 

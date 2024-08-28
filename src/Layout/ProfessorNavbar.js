@@ -21,7 +21,7 @@ function ProfessorNavbar({handleLogout}) {
                               className="hover:bg-blue-700 px-3 py-2 rounded-md text-lg font-bold flex items-center">
                             <FaBell className="mr-2"/> Attendance
                         </Link>
-                        <Link to="/schedule"
+                        <Link to="/Schedule"
                               className="hover:bg-blue-700 px-3 py-2 rounded-md text-lg font-bold flex items-center">
                             <FaCalendarAlt className="mr-2"/> Schedule
                         </Link>

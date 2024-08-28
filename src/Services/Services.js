@@ -25,8 +25,7 @@ export const deletePerson = async (uuid) => {
 export const listAllRooms = async () => {
     return await request(
         HttpMethods.get,
-        HttpHeaders.LuxandHeader,
-        BaseURL.listRooms
+        HttpHeaders.LuxandHeader, BaseURL.listRooms
     );
 };
 
@@ -34,19 +33,21 @@ export const listAllRooms = async () => {
 export const deleteRoom = async (uuid) => {
     return await request(
         HttpMethods.delete,
-        HttpHeaders.LuxandHeader,
-        BaseURL.deleteRoom,
-        {uuid}
-    );
+        HttpHeaders.LuxandHeader, `${BaseURL.deleteRoom}/${uuid}`);
 };
 
-// Function to check-in using a specific room and photo URL
-export const checkIn = async (roomUuid, photoUrl) => {
-    const data = { room: roomUuid, photo: photoUrl };
+export const getRooms = async () => {
     return await request(
-        HttpMethods.post,
-        HttpHeaders.LuxandHeader,
-        BaseURL.CheckIn,
-        JSON.stringify(data)
+        HttpMethods.get,
+        HttpHeaders.LuxandHeader, BaseURL.listRooms
     );
-};
+}
+
+export const ListCollections = async () => {
+    return await request(
+        HttpMethods.get,
+        HttpHeaders.LuxandHeader,
+        BaseURL.listCollections
+    );
+}
+

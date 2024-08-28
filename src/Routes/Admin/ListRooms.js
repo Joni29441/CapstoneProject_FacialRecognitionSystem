@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import request from '../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../Services/Constants';
-import useToastify from '../Hooks/useToastify';
+import request from '../../Services/ApiService';
+import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from "react-toastify";
+import {deleteRoom, getRooms} from "../../Services/Services";
 
 function ListRooms() {
     const [rooms, setRooms] = useState([]);
@@ -12,9 +13,8 @@ function ListRooms() {
 
     const fetchRooms = async () => {
         try {
-            const response = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listRooms);
+            const response = await getRooms();
             setRooms(response);
-            success('Rooms retrieved successfully');
         } catch (err) {
             console.error('An error occurred while fetching rooms:', err);
             error('Failed to retrieve rooms. Please try again.');
@@ -34,13 +34,11 @@ function ListRooms() {
 
         try {
             const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addRoom, formData);
-            console.log("Data being sent:", formData);
-
             if (response && response.room) {
                 success('Room added successfully!');
-                setRoomName(''); // Reset form field
-                setTimezone(''); // Reset form field
-                fetchRooms(); // Refetch the rooms to trigger a re-render
+                setRoomName('');
+                setTimezone('');
+                fetchRooms();
             } else {
                 error(`Failed to add room: ${response?.message || 'Unknown error'}`);
                 console.error('Unexpected API response:', response);
@@ -53,12 +51,10 @@ function ListRooms() {
 
     const handleDelete = async (uuid) => {
         try {
-            const deleteUrl = `${BaseURL.deleteRoom}/${uuid}`;
-            const response = await request(HttpMethods.delete, HttpHeaders.LuxandHeader, deleteUrl);
-
+            const response = await deleteRoom(uuid);
             if (response) {
                 success('Room deleted successfully!');
-                fetchRooms(); // Refetch the rooms to trigger a re-render
+                fetchRooms();
             } else {
                 error('Failed to delete room. Please try again.');
                 console.error('Unexpected API response:', response);
