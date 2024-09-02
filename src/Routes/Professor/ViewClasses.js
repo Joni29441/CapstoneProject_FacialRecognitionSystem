@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect} from "react";
 import request from '../../Services/ApiService';
 import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
 import { FaChalkboardTeacher } from 'react-icons/fa';
@@ -173,7 +173,7 @@ function ViewClasses() {
                                         </td>
                                         <td className="py-3 px-4">{person.name}</td>
                                         <td className="py-3 px-4">{person.uuid}</td>
-                                        <td className="py-3 px-4">{moment(person.entered_at).format("DD-MM-YYYY  HH:mm")}</td>
+                                        <td className="py-3 px-8 ">{moment(person.entered_at).format("HH:mm A")}</td>
                                     </tr>
                                 ))}
                                 </tbody>

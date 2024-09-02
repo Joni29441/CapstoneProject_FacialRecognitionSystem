@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useToastify from "../../Hooks/useToastify";
 import { ToastContainer } from "react-toastify";
 import { listAllPersons, ListCollections } from "../../Services/Services";
-import axios from "axios";
 import {BaseURL, HttpHeaders, HttpMethods} from "../../Services/Constants";
 import request from "../../Services/ApiService";
 
@@ -31,7 +30,6 @@ export function AddStudentToCollection() {
     }, []);
 
     const handleSubmit = async (personUuid) => {
-        console.log('test', personUuid)
 
         if (!selectedCollectionUuid || !personUuid) {
             error("Please select a collection and a student");

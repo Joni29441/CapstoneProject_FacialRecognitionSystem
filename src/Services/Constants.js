@@ -14,6 +14,7 @@ export const BaseURL = {
     getCollectionInfo: `${url}/collection`,
     listCollections: `${url}/collection`,
     AddPersonToCollection : `${url}/collection`,
+    UpdateCollection : `${url}/collection`,
     deletePerson: `${url}/person`,
     updatePerson: `${url}/person`,
     listRooms: `${url}/attendance/room`,

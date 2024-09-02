@@ -2,7 +2,7 @@ import Navbar from "../Layout/Navbar";
 import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
 import Login from "./Login";
 import Homepage from "./Homepage";
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import AdminDashboard from "./Admin/AdminDashboard";
 import AdminNavbar from "../Layout/AdminNavbar";
 import CheckIn from "./CheckIn";
@@ -23,11 +23,15 @@ import {AddStudentToCollection} from "./Admin/AddStudentToCollection";
 import StudentNavbar from "../Layout/StudentNavbar";
 import Attendance from "./Student/Attendance";
 import Classes from "./Student/Classes";
+import Schedule from "./Professor/Schedule";
+import {UserContext} from "../Context/UserContext";
 
 
 function Navigation() {
     const [token, setToken] = useState(localStorage.getItem('authToken'));
     const [roles, setRoles] = useState(JSON.parse(localStorage.getItem('roles')) || []);
+    const { setUser } = useContext(UserContext);
+
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -55,6 +59,7 @@ function Navigation() {
         setRoles([]);
         localStorage.removeItem('authToken');
         localStorage.removeItem('roles');
+        setUser(null);
         navigate("/Homepage");
     };
 
@@ -104,6 +109,7 @@ function Navigation() {
                 } />
                 <Route path="/Attendance" element={<Attendance/>}/>
                 <Route path="/Classes" element={<Classes/>}/>
+                <Route path="/Schedule" element={<Schedule/>}/>
                 <Route path="/CollectionInfo" element={<CollectionInfo/>}/>
                 <Route path="/AddStudentToCollection" element={<AddStudentToCollection/>}/>
             </Routes>

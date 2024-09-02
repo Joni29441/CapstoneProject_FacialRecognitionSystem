@@ -6,8 +6,9 @@ function Classes() {
 
     // Hardcoded schedule data based on class name
     const scheduleData = {
-        "Software Engineering ": "Monday, 10:00 AM - 12:00 AM",
-        "Distributed Systems": "Wednesday, 11:00 AM - 13:00 PM",
+        "Distributed Systems": "Monday, 11:00 AM - 13:00 PM",
+        "Software Engineering ": "Tuesday, 10:00 AM - 12:00 AM",
+        "Discrete Structures": "Thursday, 10:00 AM - 12:00 AM",
         "Computer Networks": "Friday, 10:00 AM - 11:00 AM",
     };
 
@@ -15,7 +16,7 @@ function Classes() {
         const fetchResData = async () => {
             try {
                 const res = await ListCollections();
-                setResponse(res.filter(item => item.name === "Computer Networks" || item.name === "Software Engineering "|| item.name === "Distributed Systems"));
+                setResponse(res.filter(item => item.name === "Computer Networks" || item.name === "Software Engineering " || item.name === "Distributed Systems"|| item.name === "Discrete Structures"));
                 console.log(response);
             } catch (e) {
                 console.error("Something Went Wrong", e);

@@ -3,6 +3,7 @@ import request from '../../Services/ApiService';
 import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
 import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
+import moment from "moment/moment";
 
 function ViewPresence() {
     const [rooms, setRooms] = useState([]);
@@ -109,7 +110,7 @@ function ViewPresence() {
                                                 />
                                             </td>
                                             <td className="py-3 px-4">{person.uuid}</td>
-                                            <td className="py-3 px-4">{new Date(person.entered_at).toLocaleString()}</td>
+                                            <td className="py-3 px-4">{moment(person.entered_at).format("MMM Do YYYY , HH:MM A")}</td>
                                         </tr>
                                     ))}
                                     </tbody>

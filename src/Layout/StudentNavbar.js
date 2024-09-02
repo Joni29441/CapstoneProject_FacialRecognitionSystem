@@ -11,14 +11,14 @@ const StudentNavbar = ({ handleLogout }) => {
 
     return (
         <nav className="bg-blue-800 text-white shadow-lg">
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div className="flex items-center">
-                    <img src='/photos/SEEU.png' alt="SEEU Logo" className="h-11" />
+            <div className=" ml-2 py-4 flex justify-between ">
+                <div className="flex">
+                    <img src='/photos/SEEU.png' alt="SEEU Logo" className="h-12 " />
                 </div>
                 <div className="md:hidden" onClick={toggleMenu}>
                     {isOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
                 </div>
-                <div className={`w-full md:flex md:items-center md:w-auto ${isOpen ? 'block' : 'hidden'}`}>
+                <div className={`w-full  md:flex md:items-center text-xl md:w-auto ${isOpen ? 'block' : 'hidden'}`}>
                     <ul className="md:flex md:space-x-6">
                         <li>
                             <Link to="/StudentDashboard" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">

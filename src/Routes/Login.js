@@ -1,17 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, { useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import request from '../Services/ApiService';
 import {BaseURL, HttpHeaders, HttpMethods} from '../Services/Constants';
 import useToastify from '../Hooks/useToastify';
 import {ToastContainer} from 'react-toastify';
-import {UserContext} from "../Context/UserContext";
 
 function Login({onLoginSuccess}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {success, error} = useToastify();
     const navigate = useNavigate();
-    const { setUser, user } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,8 +22,10 @@ function Login({onLoginSuccess}) {
             if (response.token) {
                 localStorage.setItem('authToken', response.token);
                 onLoginSuccess(response.token, response.roles);
-                setUser({ email: payload.email, roles: response.roles, ...user});
+                localStorage.setItem('email', JSON.stringify(response.email));
+                // setUser({ email: response.email, roles: response.roles, ...user});
                 success("Successfully Logged In");
+
 
                 if (response.roles.includes('Admin')) {
                     navigate('/Dashboard');
