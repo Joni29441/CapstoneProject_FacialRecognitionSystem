@@ -48,7 +48,6 @@ function CheckIn() {
             formData.append('photo', test);
 
             const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.CheckIn, formData);
-            console.log('Check-in response:', response);
 
             if (response.status === 'success') {
                 success("Successfully Checked-In");

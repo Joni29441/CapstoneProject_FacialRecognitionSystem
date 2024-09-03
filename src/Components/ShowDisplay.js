@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { listAllPersons } from "../Services/Services";
 import request from "../Services/ApiService";
 import { BaseURL, HttpHeaders, HttpMethods } from "../Services/Constants";
+import useToastify from "../Hooks/useToastify";
+import {ToastContainer} from "react-toastify";
 
 const ShowDisplay = ({ collectionUuid }) => {
     const [persons, setPersons] = useState([]);
+    const {success} = useToastify();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,8 +22,6 @@ const ShowDisplay = ({ collectionUuid }) => {
     }, []);
 
     const handleSubmit = async (personUuid) => {
-        console.log("Person UUID:", personUuid); // Debug: Check what personUuid is being passed
-        console.log("Collection UUID:", collectionUuid); // Debug: Check what collectionUuid is being passed
 
         if (!personUuid || !collectionUuid) {
             console.error("Missing UUIDs: ", { personUuid, collectionUuid });
@@ -32,10 +33,9 @@ const ShowDisplay = ({ collectionUuid }) => {
 
         try {
             const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, url, data);
-            console.log("API Response:", response);
 
             if (response.status === 'success') {
-                console.log('Person added to collection successfully!');
+                success('Person added to collection successfully!');
             } else {
                 console.error('Failed to add person to collection:', response.message);
             }
@@ -71,6 +71,7 @@ const ShowDisplay = ({ collectionUuid }) => {
                 ))}
                 </tbody>
             </table>
+            <ToastContainer/>
         </div>
     );
 };

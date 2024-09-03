@@ -17,8 +17,6 @@ function RemoveStudentFromCollection() {
             try {
                 const res = await ListCollections();
                 setCollections(res);
-                console.log(res);
-
             } catch (e) {
                 error("Something Went Wrong");
             }
@@ -37,7 +35,6 @@ function RemoveStudentFromCollection() {
                         `${BaseURL.getCollectionInfo}/${selectedCollectionUuid}`,
                     );
                     setCollectionInfo(response.persons);
-                    console.log(response);
                 }
 
             } catch (e) {

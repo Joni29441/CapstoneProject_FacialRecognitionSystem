@@ -17,7 +17,6 @@ export function AddStudentToCollection() {
                 const students = await listAllPersons();
                 setStudentResponse(students);
 
-                console.log(students);
 
                 const collections = await ListCollections();
                 setCollectionResponse(collections);
@@ -43,8 +42,6 @@ export function AddStudentToCollection() {
             const url = `${BaseURL.AddPersonToCollection}/${selectedCollectionUuid}/person`;
 
             const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, url, formData);
-
-            console.log("Response data:", response);
 
             if (response && response.status === "success") {
                 success(`Student added to the course successfully!`);

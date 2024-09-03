@@ -34,8 +34,6 @@ function ViewPresence() {
             try {
                 const response = await request(HttpMethods.get, HttpHeaders.LuxandHeader, `${BaseURL.viewPresence}/${selectedRoom.uuid}/presence`);
 
-                console.log('API response:', response);
-
                 if (response && response.presence.length > 0) {
                     setPresenceData(response.presence);
                     success(`Presence data for ${selectedRoom.name} retrieved successfully.`);

@@ -17,7 +17,6 @@ function Login({onLoginSuccess}) {
 
         try {
             const response = await request(HttpMethods.post, HttpHeaders.BaseHeader, BaseURL.Login, payload);
-            console.log("Login Response:", response);
 
             if (response.token) {
                 localStorage.setItem('authToken', response.token);

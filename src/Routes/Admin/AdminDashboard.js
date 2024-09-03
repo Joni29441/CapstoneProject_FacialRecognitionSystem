@@ -27,7 +27,6 @@ function AdminDashboard() {
                 // Fetch total collections
                 const collectionsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listCollections);
                 setTotalCollections(collectionsResponse.length);
-                console.log("collection response", collectionsResponse);
 
                 let totalCheckIns = 0;
 

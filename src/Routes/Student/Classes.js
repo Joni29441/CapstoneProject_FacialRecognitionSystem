@@ -19,7 +19,6 @@ function Classes() {
                 setIsLoading(true);
                 const res = await ListCollections();
                 setResponse(res.filter(item => item.name === "Computer Networks" || item.name === "Software Engineering " || item.name === "Distributed Systems"|| item.name === "Discrete Structures"));
-                console.log(response);
             } catch (e) {
                 console.error("Something Went Wrong", e);
             }
