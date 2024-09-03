@@ -27,9 +27,9 @@ function Classes() {
 
     return (
         <div className="min-h-screen bg-gray-100 py-10 px-8">
-            <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8">
+            <div className="w-1/2 mx-auto bg-white shadow-lg rounded-lg p-8">
                 <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Class Schedule</h2>
-                <table className="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg">
+                <table className="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg relative overflow-x-scroll ">
                     <thead className="bg-blue-600 text-white">
                     <tr>
                         <th className="py-3 px-6 text-left font-semibold">Class Name</th>

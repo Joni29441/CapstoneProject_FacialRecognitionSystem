@@ -8,7 +8,7 @@ import { FaTimes } from 'react-icons/fa';
 function CreateCollection() {
     const [name, setName] = useState("");
     const [collection, setCollection] = useState([]);
-    const [selectedCollection, setSelectedCollection] = useState(null);
+    const [selectedCollection, setSelectedCollection] = useState("");
     const [newName, setNewName] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { success, error } = useToastify();
@@ -18,31 +18,24 @@ function CreateCollection() {
             try {
                 const collectionsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listCollections);
                 setCollection(collectionsResponse);
-                console.log("API Response:", collectionsResponse);
             } catch (e) {
-                error("Error:", e);
+                error("Error fetching collections.");
             }
-        }
+        };
         fetchCollections();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
-            name: name
-        };
-        const params = {
-            name: name
-        }
-
+        const data = { name };
         try {
-            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addCollection, data, params);
+            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addCollection, data);
             if (response) {
                 success(`Collection "${response.name}" created successfully!`);
                 setCollection([...collection, response]);
                 setName('');
             } else {
-                error(`Failed to create collection: ${response?.message}`);
+                error('Failed to create collection.');
             }
         } catch (err) {
             console.error('An error occurred while creating the collection:', err);
@@ -60,7 +53,7 @@ function CreateCollection() {
                 error('Failed to delete collection. Please try again.');
             }
         } catch (e) {
-            error("Something went wrong", e);
+            error('Something went wrong while deleting the collection.');
         }
     };
 
@@ -73,34 +66,33 @@ function CreateCollection() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedCollection(null);
+        setNewName('');
     };
 
     const handleUpdate = async () => {
         if (!selectedCollection) return;
 
-        const data = { name: newName };
+        const data = {
+            name: newName
+        };
+        const url = `${BaseURL.UpdateCollection}/${selectedCollection.uuid}`;
 
         try {
-            const updateResponse = await request(
-                HttpMethods.put,
-                HttpHeaders.LuxandHeader,
-                `${BaseURL.UpdateCollection}/${selectedCollection.uuid}`,
-                data
-            );
+            const updateResponse = await request(HttpMethods.put, HttpHeaders.LuxandHeader, url, data);
 
             if (updateResponse) {
+                success(`Collection "${newName}" updated successfully!`);
                 setCollection((prevCollections) =>
                     prevCollections.map((col) =>
                         col.uuid === selectedCollection.uuid ? { ...col, name: newName } : col
                     )
                 );
-                success(`Collection "${newName}" updated successfully!`);
                 handleCloseModal();
             } else {
                 error('Failed to update collection. Please try again.');
             }
         } catch (e) {
-            error("Something went wrong", e);
+            error('Something went wrong while updating the collection.');
         }
     };
 
@@ -218,7 +210,6 @@ function CreateCollection() {
             <ToastContainer />
         </section>
     );
-
 }
 
 export default CreateCollection;

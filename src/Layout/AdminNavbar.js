@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaUserGraduate, FaList, FaPlus, FaChalkboardTeacher, FaUserPlus, FaSignOutAlt } from 'react-icons/fa';
 import { ImUserPlus } from "react-icons/im";
+import {IoPersonRemoveSharp} from "react-icons/io5";
 
 function AdminNavbar({ handleLogout }) {
     return (
@@ -11,7 +12,7 @@ function AdminNavbar({ handleLogout }) {
                     Admin Dashboard
                 </Link>
             </div>
-            <div className="flex flex-col mt-12 space-y-4">
+            <div className="flex flex-col mt-2 space-y-4">
                 <Link to="/Dashboard" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
                     <FaChalkboardTeacher className="text-xl" />
                     <span className="ml-4">Dashboard</span>
@@ -26,11 +27,15 @@ function AdminNavbar({ handleLogout }) {
                 </Link>
                 <Link to="/CreateCollection" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
                     <FaPlus className="text-xl" />
-                    <span className="ml-4">Add Collection</span>
+                    <span className="ml-4">Manage Collection</span>
                 </Link>
                 <Link to="/AddStudentToCollection" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
                     <FaUserGraduate className="text-xl" />
                     <span className="ml-4">Add Student to Course</span>
+                </Link>
+                <Link to="/RemoveStudentFromCollection" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
+                    <IoPersonRemoveSharp  className="text-2xl" />
+                    <span className="ml-4">Remove Student From Course</span>
                 </Link>
                 <Link to="/ListRooms" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
                     <FaChalkboardTeacher className="text-xl" />

@@ -3,7 +3,6 @@ import axios from "axios";
 const request = async (method, header, url, payload, params) => {
     const token = localStorage.getItem('authToken');
 
-
     if (token) {
         header = {
             ...header,

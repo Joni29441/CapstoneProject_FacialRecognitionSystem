@@ -12,7 +12,7 @@ const Homepage = () => {
             </section>
 
             {/* Cards Section */}
-            <section className="py-20">
+            <section className="py-20 border">
                 <div className="container mx-auto px-6 md:px-12 lg:px-24">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Project Details</h2>
                     <div className="flex flex-wrap -mx-4">

@@ -32,7 +32,7 @@ export function AddStudentToCollection() {
     const handleSubmit = async (personUuid) => {
 
         if (!selectedCollectionUuid || !personUuid) {
-            error("Please select a collection and a student");
+            error("Please select a course and a student");
             return;
         }
 
@@ -47,12 +47,12 @@ export function AddStudentToCollection() {
             console.log("Response data:", response);
 
             if (response && response.status === "success") {
-                success(`Student added to the collection successfully!`);
+                success(`Student added to the course successfully!`);
             } else {
-                error(`Failed to add student to collection: ${response?.message || 'Unknown error'}`);
+                error(`Failed to add student to course: ${response?.message || 'Unknown error'}`);
             }
         } catch (err) {
-            console.error("Error adding student to collection", err);
+            console.error("Error adding student to course", err);
             error("Failed to add student to the collection");
         }
     };

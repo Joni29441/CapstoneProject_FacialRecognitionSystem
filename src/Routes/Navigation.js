@@ -25,15 +25,17 @@ import Attendance from "./Student/Attendance";
 import Classes from "./Student/Classes";
 import Schedule from "./Professor/Schedule";
 import {UserContext} from "../Context/UserContext";
+import RemoveStudentFromCollection from "./Admin/RemoveStudentFromCollection";
 
 
 function Navigation() {
     const [token, setToken] = useState(localStorage.getItem('authToken'));
     const [roles, setRoles] = useState(JSON.parse(localStorage.getItem('roles')) || []);
     const { setUser } = useContext(UserContext);
-
-
     const navigate = useNavigate();
+
+    let timeoutId;
+
     useEffect(() => {
         if (token) {
             localStorage.setItem('authToken', token);
@@ -62,6 +64,38 @@ function Navigation() {
         setUser(null);
         navigate("/Homepage");
     };
+
+
+    useEffect(() => {
+        const handleLogout = () => {
+            setToken("");
+            setRoles([]);
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('roles');
+            setUser(null);
+            navigate("/Homepage");
+        };
+
+        const resetTimeout = () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                handleLogout();
+            }, 180000); // 3 minutes
+        };
+
+        window.addEventListener('mousemove', resetTimeout);
+        window.addEventListener('keydown', resetTimeout);
+
+        resetTimeout();
+
+        return () => {
+            clearTimeout(timeoutId);
+            window.removeEventListener('mousemove', resetTimeout);
+            window.removeEventListener('keydown', resetTimeout);
+        };
+    }, [navigate, setUser]);
+
+
 
     const isAdmin = roles.includes('Admin');
     const isProfessor = roles.includes('Professor');
@@ -112,6 +146,7 @@ function Navigation() {
                 <Route path="/Schedule" element={<Schedule/>}/>
                 <Route path="/CollectionInfo" element={<CollectionInfo/>}/>
                 <Route path="/AddStudentToCollection" element={<AddStudentToCollection/>}/>
+                <Route path="/RemoveStudentFromCollection" element={<RemoveStudentFromCollection/>}/>
             </Routes>
             {isAdmin || <Footer/> }
         </>

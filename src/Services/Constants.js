@@ -11,7 +11,7 @@ export const BaseURL = {
     ListAllPersons : `${url}/v2/person`,
     addCollection: `${url}/collection`,
     deleteCollection: `${url}/collection`,
-    getCollectionInfo: `${url}/collection`,
+    getCollectionInfo: `${url}/collection/`,
     listCollections: `${url}/collection`,
     AddPersonToCollection : `${url}/collection`,
     UpdateCollection : `${url}/collection`,
