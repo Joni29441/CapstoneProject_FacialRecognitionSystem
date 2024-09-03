@@ -41,7 +41,7 @@ function RemoveStudentFromCollection() {
                 }
 
             } catch (e) {
-                error("smthg wrong")
+                error("Something Went Wrong");
             }
         }
         getdata();
@@ -59,7 +59,7 @@ function RemoveStudentFromCollection() {
             }
         } catch (e) {
             console.error(e)
-            error("nopeee");
+            error("Something Went Wrong");
         }
     }
 
@@ -87,7 +87,7 @@ function RemoveStudentFromCollection() {
                     </div>
                     <div>
                         <h2>{collectionInfo.name}</h2>
-                        {collectionInfo.length > 0 ? (
+                        {collectionInfo.length > 0 && (
                             <div>
                                 <table className="min-w-full bg-white text-left table-auto border-collapse shadow-lg">
                                     <thead className="bg-gray-200">
@@ -118,10 +118,6 @@ function RemoveStudentFromCollection() {
                                 </table>
                                 <h1 className="text-left font-semibold p-1">Number of
                                     Students: {collectionInfo.length}</h1>
-                            </div>
-                        ) : (
-                            <div className="text-center py-2">
-                                <p className="font-bold text-gray-600">No students enrolled in this course.</p>
                             </div>
                         )}
                     </div>

@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import request from '../../Services/ApiService';
-import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
+import {BaseURL, HttpHeaders, HttpMethods} from '../../Services/Constants';
 import useToastify from '../../Hooks/useToastify';
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import {deletePerson, listAllPersons} from "../../Services/Services";
+import {OrbitProgress} from "react-loading-indicators";
 
 function RetrieveAllPersons() {
     const [persons, setPersons] = useState([]);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [newName, setNewName] = useState('');
-    const { success, error } = useToastify();
+    const [isLoading, setIsLoading] = useState(false);
+    const {success, error} = useToastify();
 
     useEffect(() => {
         const fetchPersons = async () => {
             try {
+                setIsLoading(true);
                 const response = await listAllPersons();
                 setPersons(response);
                 success('Students retrieved successfully');
             } catch (err) {
                 console.error('An error occurred while fetching persons:', err);
                 error('Failed to retrieve Students. Please try again.');
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -57,7 +62,7 @@ function RetrieveAllPersons() {
                 success('Person updated successfully!');
                 setPersons((prevPersons) =>
                     prevPersons.map((person) =>
-                        person.uuid === selectedPerson.uuid ? { ...person, name: newName } : person
+                        person.uuid === selectedPerson.uuid ? {...person, name: newName} : person
                     )
                 );
                 setSelectedPerson(null);
@@ -77,63 +82,73 @@ function RetrieveAllPersons() {
                 <div className="max-w-full mx-auto">
                     <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">All Registered Students</h2>
                     <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white shadow-md rounded-lg">
-                            <thead className="bg-blue-900 text-white">
-                            <tr>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Photo</th>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">UUID</th>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Degree</th>
-                                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody className="text-gray-700">
-                            {persons.length > 0 ? (
-                                persons.map(person => (
-                                    <tr key={person.uuid} className="hover:bg-gray-100">
-                                        <td className="py-3 px-4">
-                                            <img
-                                                src={person.faces[0]?.url || '/default-avatar.png'}
-                                                alt={`${person.name}'s face`}
-                                                className="w-12 h-12 rounded-full object-cover"
-                                            />
-                                        </td>
-                                        <td className="py-3 px-4">{person.name}</td>
-                                        <td className="py-3 px-4">{person.uuid}</td>
-                                        <td className="py-3 px-4">
-                                            {person.collections
-                                                .filter(collection => collection.name.trim() === "Computer Sciences")
-                                                .map(collection => collection.name)
-                                            }
-                                        </td>
-                                        <td className="py-3 px-4 space-x-2">
-                                            <button
-                                                onClick={() => handleDelete(person.uuid)}
-                                                className="py-2 px-4 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                            >
-                                                Delete
-                                            </button>
-                                            <button
-                                                onClick={() => { setSelectedPerson(person); setNewName(person.name); }}
-                                                className="py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                            >
-                                                Update
-                                            </button>
+                        {isLoading ? (
+                                <div className="flex justify-center">
+                                    <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
+                                </div>
+                        ) : (
+                            <table className="min-w-full bg-white shadow-md rounded-lg">
+                                <thead className="bg-blue-900 text-white">
+                                <tr>
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Photo</th>
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">UUID</th>
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Degree</th>
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody className="text-gray-700">
+                                {persons.length > 0 ? (
+                                    persons.map(person => (
+                                        <tr key={person.uuid} className="hover:bg-gray-100">
+                                            <td className="py-3 px-4">
+                                                <img
+                                                    src={person.faces[0]?.url || '/default-avatar.png'}
+                                                    alt={`${person.name}'s face`}
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+                                            </td>
+                                            <td className="py-3 px-4">{person.name}</td>
+                                            <td className="py-3 px-4">{person.uuid}</td>
+                                            <td className="py-3 px-4">
+                                                {person.collections
+                                                    .filter(collection => collection.name.trim() === "Computer Sciences")
+                                                    .map(collection => collection.name)
+                                                }
+                                            </td>
+                                            <td className="py-3 px-4 space-x-2">
+                                                <button
+                                                    onClick={() => handleDelete(person.uuid)}
+                                                    className="py-2 px-4 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                >
+                                                    Delete
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedPerson(person);
+                                                        setNewName(person.name);
+                                                    }}
+                                                    className="py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                                >
+                                                    Update
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5" className="text-center py-4">
+                                            No persons found in the database.
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="5" className="text-center py-4">
-                                        No persons found in the database.
-                                    </td>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                                )}
+                                </tbody>
+                            </table>
+                        )}
+
                     </div>
                 </div>
-                <ToastContainer />
+                <ToastContainer/>
             </div>
 
             {/* Modal for Updating Person */}

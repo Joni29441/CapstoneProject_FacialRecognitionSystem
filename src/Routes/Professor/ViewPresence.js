@@ -21,6 +21,7 @@ function ViewPresence() {
                 console.error('An error occurred while fetching rooms:', err);
                 error('Failed to retrieve rooms. Please try again.');
             }
+
         };
 
         fetchRooms();

@@ -4,6 +4,7 @@ import { BaseURL, HttpHeaders, HttpMethods } from '../../Services/Constants';
 import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
 import { FaTimes } from 'react-icons/fa';
+import {OrbitProgress} from "react-loading-indicators";
 
 function CreateCollection() {
     const [name, setName] = useState("");
@@ -11,15 +12,20 @@ function CreateCollection() {
     const [selectedCollection, setSelectedCollection] = useState("");
     const [newName, setNewName] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { success, error } = useToastify();
 
     useEffect(() => {
         const fetchCollections = async () => {
             try {
+                setIsLoading(true);
                 const collectionsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listCollections);
                 setCollection(collectionsResponse);
             } catch (e) {
                 error("Error fetching collections.");
+            }
+            finally {
+                setIsLoading(false);
             }
         };
         fetchCollections();
@@ -128,57 +134,64 @@ function CreateCollection() {
             </div>
             <div className="overflow-x-auto mt-12 w-full max-w-4xl">
                 <h3 className="text-2xl font-semibold text-gray-700 mb-4">Available Collections</h3>
-                <table className="min-w-full bg-white shadow-xl rounded-lg border-2">
-                    <thead className="bg-blue-600 text-white">
-                    <tr>
-                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">#</th>
-                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Course Id</th>
-                        <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody className="text-gray-700">
-                    {collection.length > 0 ? (
-                        collection.map((col, index) => (
-                            <tr key={index} className="hover:bg-gray-100 odd:bg-gray-50 border-b transition-colors">
-                                <td className="py-3 font-bold px-4">{index + 1}</td>
-                                <td className="py-3 font-bold px-4">{col.name}</td>
-                                <td className="py-3 px-4">{col.uuid}</td>
-                                <td className="py-3 px-4">
-                                    <div className="flex gap-2">
-                                        <button
-                                            className="bg-red-600 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-red-700 transition-colors"
-                                            onClick={() => handleDelete(col.uuid)}
-                                        >
-                                            Delete
-                                        </button>
-                                        <button
-                                            className="bg-yellow-400 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-yellow-500 transition-colors"
-                                            onClick={() => handleOpenModal(col)}
-                                        >
-                                            Update
-                                        </button>
-                                    </div>
+                {isLoading ? (
+                    <div className="flex justify-center">
+                        <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
+                    </div>
+                ) : (
+                    <table className="min-w-full bg-white shadow-xl rounded-lg border-2">
+                        <thead className="bg-blue-600 text-white">
+                        <tr>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">#</th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Course Id</th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody className="text-gray-700">
+                        {collection.length > 0 ? (
+                            collection.map((col, index) => (
+                                <tr key={index} className="hover:bg-gray-100 odd:bg-gray-50 border-b transition-colors">
+                                    <td className="py-3 font-bold px-4">{index + 1}</td>
+                                    <td className="py-3 font-bold px-4">{col.name}</td>
+                                    <td className="py-3 px-4">{col.uuid}</td>
+                                    <td className="py-3 px-4">
+                                        <div className="flex gap-2">
+                                            <button
+                                                className="bg-red-600 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-red-700 transition-colors"
+                                                onClick={() => handleDelete(col.uuid)}
+                                            >
+                                                Delete
+                                            </button>
+                                            <button
+                                                className="bg-yellow-400 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-yellow-500 transition-colors"
+                                                onClick={() => handleOpenModal(col)}
+                                            >
+                                                Update
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="text-center py-4">
+                                    No collections found.
                                 </td>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4" className="text-center py-4">
-                                No collections found.
-                            </td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
+                        )}
+                        </tbody>
+                    </table>
+                )}
             </div>
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
-                        <div className="flex justify-between items-center border-b px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-t-lg">
+                        <div
+                            className="flex justify-between items-center border-b px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-t-lg">
                             <h2 className="text-xl font-semibold text-white">Edit Collection Name</h2>
                             <button onClick={handleCloseModal}>
-                                <FaTimes className="text-white hover:text-gray-200" />
+                                <FaTimes className="text-white hover:text-gray-200"/>
                             </button>
                         </div>
                         <div className="p-6">
@@ -207,7 +220,7 @@ function CreateCollection() {
                     </div>
                 </div>
             )}
-            <ToastContainer />
+            <ToastContainer/>
         </section>
     );
 }
