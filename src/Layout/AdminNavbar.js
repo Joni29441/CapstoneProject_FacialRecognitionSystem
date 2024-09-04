@@ -12,7 +12,7 @@ function AdminNavbar({ handleLogout }) {
                     Admin Dashboard
                 </Link>
             </div>
-            <div className="flex flex-col mt-2 space-y-4">
+            <div className="flex flex-col  space-y-2">
                 <Link to="/Dashboard" className="flex items-center px-6 py-3 text-lg hover:bg-blue-700 transition-colors duration-300">
                     <FaChalkboardTeacher className="text-xl" />
                     <span className="ml-4">Dashboard</span>

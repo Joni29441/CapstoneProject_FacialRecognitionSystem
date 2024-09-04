@@ -15,16 +15,13 @@ function AdminDashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch total persons
                 const personsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.ListAllPersons);
                 setTotalPersons(personsResponse.length);
 
-                // Fetch total rooms
                 const roomsResponse = await listAllRooms();
                 setTotalRooms(roomsResponse.length);
 
 
-                // Fetch total collections
                 const collectionsResponse = await request(HttpMethods.get, HttpHeaders.LuxandHeader, BaseURL.listCollections);
                 setTotalCollections(collectionsResponse.length);
 

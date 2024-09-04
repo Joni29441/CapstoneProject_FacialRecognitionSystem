@@ -23,6 +23,7 @@ export const BaseURL = {
     viewPresence: `${url}/attendance/room`,
     viewPresenceByDate: `${url}/attendance/room/`,
     viewPresenceByIndividual: `${url}/attendance/subject/`,
+    retrievePersonDetails: `${url}/v2/person/`
 }
 
 

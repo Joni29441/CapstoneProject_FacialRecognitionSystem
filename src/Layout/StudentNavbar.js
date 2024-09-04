@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {FaHome, FaCalendarAlt, FaSignOutAlt, FaBars, FaTimes, FaBell} from 'react-icons/fa';
+import {CgProfile} from "react-icons/cg";
 
 const StudentNavbar = ({ handleLogout }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,12 +28,17 @@ const StudentNavbar = ({ handleLogout }) => {
                         </li>
                         <li>
                             <Link to="/Attendance" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">
-                                <FaBell className="inline mr-2" /> Attendance
+                                <FaBell className="inline mr-2" />Attendance
                             </Link>
                         </li>
                         <li>
                             <Link to="/Classes" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">
-                                <FaCalendarAlt className="inline mr-2" /> Classes
+                                <FaCalendarAlt className="inline mr-2" />Classes
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Profile" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">
+                                <CgProfile  className="inline mr-2 text-2xl" />Profile
                             </Link>
                         </li>
                         <li>

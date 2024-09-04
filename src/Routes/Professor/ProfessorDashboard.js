@@ -33,11 +33,9 @@ function ProfessorDashboard() {
         <div className="min-h-screen flex bg-gradient-to-r from-blue-50 to-gray-100">
             <div className="flex-grow py-28 px-8 mx-auto">
                 <header className="mb-8">
-                    <h2 className="text-4xl font-semibold text-center text-gray-800 mb-4">Welcome, {displayName}</h2>
+                    <h2 className="lg:text-4xl font-extrabold  text-blue-800 mb-6 sm:text-md">Welcome, {displayName}</h2>
                     <p className="text-lg text-gray-600">Here’s an overview of your teaching activities.</p>
                 </header>
-
-                {/* Dashboard Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                     <div className="bg-white shadow-xl rounded-lg p-6 transform hover:scale-105 transition-transform">
                         <div className="flex items-center justify-between">
@@ -56,7 +54,6 @@ function ProfessorDashboard() {
                         <p className="text-gray-600 mt-1">Total Students Enrolled</p>
                     </div>
                 </div>
-
             </div>
             <ToastContainer/>
         </div>

@@ -26,6 +26,7 @@ import Classes from "./Student/Classes";
 import Schedule from "./Professor/Schedule";
 import {UserContext} from "../Context/UserContext";
 import RemoveStudentFromCollection from "./Admin/RemoveStudentFromCollection";
+import Profile from "./Student/Profile";
 
 
 function Navigation() {
@@ -80,7 +81,7 @@ function Navigation() {
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
                 handleLogout();
-            }, 180000); // 3 minutes
+            }, 600000); // 10 minutes
         };
 
         window.addEventListener('mousemove', resetTimeout);
@@ -147,6 +148,7 @@ function Navigation() {
                 <Route path="/CollectionInfo" element={<CollectionInfo/>}/>
                 <Route path="/AddStudentToCollection" element={<AddStudentToCollection/>}/>
                 <Route path="/RemoveStudentFromCollection" element={<RemoveStudentFromCollection/>}/>
+                <Route path="/Profile" element={<Profile/>}/>
             </Routes>
             {isAdmin || <Footer/> }
         </>

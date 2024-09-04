@@ -8,7 +8,7 @@ import {ToastContainer} from 'react-toastify';
 function Login({onLoginSuccess}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {success, error} = useToastify();
+    const {success, error, warning} = useToastify();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -22,9 +22,7 @@ function Login({onLoginSuccess}) {
                 localStorage.setItem('authToken', response.token);
                 onLoginSuccess(response.token, response.roles);
                 localStorage.setItem('email', JSON.stringify(response.email));
-                // setUser({ email: response.email, roles: response.roles, ...user});
                 success("Successfully Logged In");
-
 
                 if (response.roles.includes('Admin')) {
                     navigate('/Dashboard');
@@ -40,10 +38,18 @@ function Login({onLoginSuccess}) {
                 console.error("Token is missing in the response");
             }
 
+            if(password == null) {
+                warning("Please enter your Password");
+            }
+
+
         } catch (err) {
-            error('Login failed:', err);
+            error('Login failed, Try Again', err);
+            setPassword("");
         }
     };
+
+
 
     return (
         <div className="min-h-screen flex">
@@ -86,8 +92,9 @@ function Login({onLoginSuccess}) {
                         <div>
                             <button
                                 type="submit"
+                                disabled={!password || !email }
                                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white
-                                bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                bg-primary hover:bg-blue-700 focus:outline-none disabled:bg-gray-600 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                             >
                                 Sign in
                             </button>

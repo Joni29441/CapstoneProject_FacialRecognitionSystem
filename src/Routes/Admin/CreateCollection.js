@@ -10,7 +10,7 @@ function CreateCollection() {
     const [name, setName] = useState("");
     const [collection, setCollection] = useState([]);
     const [selectedCollection, setSelectedCollection] = useState("");
-    const [newName, setNewName] = useState('');
+    const [newName, setNewName] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { success, error } = useToastify();
@@ -33,9 +33,11 @@ function CreateCollection() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = { name };
+        const formData = new FormData();
+        formData.append("name", name);
+
         try {
-            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addCollection, data);
+            const response = await request(HttpMethods.post, HttpHeaders.LuxandHeader, BaseURL.addCollection, formData);
             if (response) {
                 success(`Collection "${response.name}" created successfully!`);
                 setCollection([...collection, response]);
@@ -78,13 +80,14 @@ function CreateCollection() {
     const handleUpdate = async () => {
         if (!selectedCollection) return;
 
-        const data = {
-            name: newName
-        };
+        const formData = new FormData();
+        formData.append("name", newName );
+
+
         const url = `${BaseURL.UpdateCollection}/${selectedCollection.uuid}`;
 
         try {
-            const updateResponse = await request(HttpMethods.put, HttpHeaders.LuxandHeader, url, data);
+            const updateResponse = await request(HttpMethods.put, HttpHeaders.LuxandHeader, url, formData);
 
             if (updateResponse) {
                 success(`Collection "${newName}" updated successfully!`);
