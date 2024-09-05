@@ -5,6 +5,7 @@ import useToastify from '../../Hooks/useToastify';
 import { ToastContainer } from 'react-toastify';
 import { FaTimes } from 'react-icons/fa';
 import {OrbitProgress} from "react-loading-indicators";
+import StudentModal from "../../Components/StudentModal";
 
 function CreateCollection() {
     const [name, setName] = useState("");
@@ -13,6 +14,8 @@ function CreateCollection() {
     const [newName, setNewName] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedCollectionId, setSelectedCollectionId] = useState(null);
+    const [showListModal, setShowListModal] = useState(false)
     const { success, error } = useToastify();
 
     useEffect(() => {
@@ -105,8 +108,17 @@ function CreateCollection() {
         }
     };
 
+    const openListModal = (collectionId) => {
+        setSelectedCollectionId(collectionId);
+        setShowListModal(true);
+    };
+
+    const closeListModal = () => {
+        setShowListModal(false);
+    }
+
     return (
-        <section className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100 py-10 flex flex-col items-center">
+        <section className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100 ml-52 py-10 flex flex-col items-center">
             <div className="max-w-4xl w-full bg-white shadow-xl rounded-lg p-8">
                 <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Manage Collections</h2>
                 <div className="mb-10">
@@ -135,15 +147,16 @@ function CreateCollection() {
                     </form>
                 </div>
             </div>
-            <div className="overflow-x-auto mt-12 w-full max-w-4xl">
-                <h3 className="text-2xl font-semibold text-gray-700 mb-4">Available Collections</h3>
-                {isLoading ? (
-                    <div className="flex justify-center">
-                        <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
-                    </div>
-                ) : (
+            {isLoading ? (
+                <div className="flex justify-center">
+                    <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
+                </div>
+            ) : (
+            <div className=" mt-12 w-full max-w-5xl">
+                <div className="bg-white p-5 rounded-lg border-2 shadow-md">
+                    <h3 className="text-2xl font-semibold text-gray-700 mb-4">Available Collections</h3>
                     <table className="min-w-full bg-white shadow-xl rounded-lg border-2">
-                        <thead className="bg-blue-600 text-white">
+                        <thead className="bg-blue-600 text-white text-center">
                         <tr>
                             <th className="text-left py-3 px-4 uppercase font-semibold text-sm">#</th>
                             <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
@@ -154,7 +167,8 @@ function CreateCollection() {
                         <tbody className="text-gray-700">
                         {collection.length > 0 ? (
                             collection.map((col, index) => (
-                                <tr key={index} className="hover:bg-gray-100 odd:bg-gray-50 border-b transition-colors">
+                                <tr key={index}
+                                    className="hover:bg-gray-100 odd:bg-gray-50 border-b transition-colors">
                                     <td className="py-3 font-bold px-4">{index + 1}</td>
                                     <td className="py-3 font-bold px-4">{col.name}</td>
                                     <td className="py-3 px-4">{col.uuid}</td>
@@ -163,15 +177,15 @@ function CreateCollection() {
                                             <button
                                                 className="bg-red-600 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-red-700 transition-colors"
                                                 onClick={() => handleDelete(col.uuid)}
-                                            >
-                                                Delete
-                                            </button>
+                                            >Delete</button>
                                             <button
                                                 className="bg-yellow-400 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-yellow-500 transition-colors"
                                                 onClick={() => handleOpenModal(col)}
-                                            >
-                                                Update
-                                            </button>
+                                            >Update</button>
+                                            <button
+                                                className="bg-blue-400 rounded-lg text-white px-4 py-2 shadow-lg hover:bg-blue-500 transition-colors"
+                                                onClick={() => openListModal(col.uuid)}
+                                            >Students</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -185,8 +199,9 @@ function CreateCollection() {
                         )}
                         </tbody>
                     </table>
-                )}
+                </div>
             </div>
+            )}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
@@ -221,8 +236,17 @@ function CreateCollection() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             )}
+            {showListModal &&
+                <StudentModal
+                    isOpen={showListModal}
+                    onClose={closeListModal}
+                    collectionId={selectedCollectionId}
+                />
+            }
+
             <ToastContainer/>
         </section>
     );

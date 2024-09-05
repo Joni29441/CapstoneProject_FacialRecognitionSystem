@@ -85,7 +85,6 @@ function ViewClasses() {
                     <p className="text-lg text-center text-gray-600">Here’s an overview of your academic activities.</p>
                 </header>
 
-                {/* Overview Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                     <div className="bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
                         <FaChalkboardTeacher className="text-blue-600 text-4xl mb-4" />
