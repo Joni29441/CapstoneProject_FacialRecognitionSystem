@@ -42,9 +42,10 @@ function StudentDashboard() {
                             ))}
                         </div>
                         <div className="text-center mt-4">
+                        <Link to="/Classes">
                             <button className="px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all">
                                 View All Classes
-                            </button>
+                            </button></Link>
                         </div>
                     </div>
 

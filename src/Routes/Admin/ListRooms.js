@@ -75,7 +75,7 @@ function ListRooms() {
         <div className="min-h-screen flex bg-gray-100">
             <div className="flex-grow py-10 px-8 ml-64">
                 <div className="max-w-full mx-auto">
-                    <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">All Available Rooms</h2>
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">All Available Rooms</h2>
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-white shadow-lg rounded-lg">
                         <h3 className="text-2xl font-semibold text-gray-800 mb-4">Add a New Room</h3>
                         <div className="mb-4">
@@ -106,11 +106,13 @@ function ListRooms() {
                         </button>
                     </form>
                     {isLoading ? (
-                        <div className="flex justify-center">
+                        <div className="flex mx-auto justify-center">
                             <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
                         </div>
                         ) : (
-                            <table className="w-1/2 mx-auto bg-white shadow-2xl rounded-lg">
+                        <div className="bg-white p-4 rounded-lg shadow-lg border-2">
+                            <h2 className="text-center text-2xl pb-3 font-bold">Available Rooms</h2>
+                            <table className="w-full mx-auto bg-white shadow-2xl border rounded-lg">
                                 <thead className="bg-blue-900 text-white">
                                 <tr>
                                     <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Room ID</th>
@@ -122,7 +124,7 @@ function ListRooms() {
                                 <tbody className="text-gray-700">
                                 {rooms.length > 0 ? (
                                     rooms.map((room, index) => (
-                                        <tr key={index} className="hover:bg-gray-100">
+                                        <tr key={index} className="hover:bg-gray-200 odd:bg-gray-100 even:bg-white">
                                             <td className="py-3 px-4">{index + 1}</td>
                                             <td className="py-3 px-4">{room.name}</td>
                                             <td className="py-3 px-4">{room.timezone}</td>
@@ -145,7 +147,8 @@ function ListRooms() {
                                 )}
                                 </tbody>
                             </table>
-                        )}
+                        </div>
+                    )}
                 </div>
                 <ToastContainer/>
             </div>

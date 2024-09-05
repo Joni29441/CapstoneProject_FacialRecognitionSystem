@@ -132,7 +132,9 @@ function RegisterUser() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-3 px-6 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="w-full py-3 px-6 bg-blue-600 text-white rounded-lg shadow-lg
+                         hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                         disabled:bg-blue-400"
                         disabled={
                             !email.includes('@') ||
                             !(password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password) && /[@$!%*?&]/.test(password)) ||

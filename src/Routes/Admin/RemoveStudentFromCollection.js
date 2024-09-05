@@ -72,7 +72,7 @@ function RemoveStudentFromCollection() {
                         <select
                             value={selectedCollectionUuid}
                             onChange={(e) => setSelectedCollectionUuid(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none
+                            className="w-full font-semibold px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none
                             focus:ring-blue-500 focus:border-blue-500">
                             <option value="" disabled>Select a collection</option>
                             {collections.map((collection, index) => (
