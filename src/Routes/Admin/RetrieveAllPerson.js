@@ -138,7 +138,9 @@ function RetrieveAllPersons() {
         <div className="min-h-screen bg-gray-100 flex">
             <div className="flex-grow py-10 px-8 ml-64">
                 <div className="max-w-full mx-auto">
-                    <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">All Registered Students</h2>
+                    <div className="bg-white p-6 rounded-lg border shadow-xl">
+
+                    <h2 className="text-5xl font-bold text-center text-blue-800 mb-6">All Registered Students</h2>
                     <div className="grid grid-cols-8">
                         <div className="flex p-5 col-span-7">
                             <form className="w-full">
@@ -168,7 +170,6 @@ function RetrieveAllPersons() {
                                 <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
                             </div>
                         ) : (
-                            <div className="bg-white p-6">
                                 <table className="min-w-full bg-white shadow-md rounded-lg">
                                     <thead className="bg-blue-900 text-white">
                                     <tr>
@@ -226,7 +227,6 @@ function RetrieveAllPersons() {
                                     )}
                                     </tbody>
                                 </table>
-                            </div>
                         )}
 
                     </div>
@@ -263,6 +263,7 @@ function RetrieveAllPersons() {
                     </div>
                 </div>
             )}
+        </div>
         </div>
     );
 }

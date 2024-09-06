@@ -59,7 +59,7 @@ function ViewPresence() {
     return (
         <div className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100 py-10 px-8">
             <div className="flex-grow py-10 px-8 mx-auto max-w-7xl">
-                <h1 className="text-4xl font-extrabold text-center text-blue-900 mb-12">
+                <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-12">
                     Select a Room to View Presence
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">

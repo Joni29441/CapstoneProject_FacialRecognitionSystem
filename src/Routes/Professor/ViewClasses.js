@@ -81,7 +81,7 @@ function ViewClasses() {
         <div className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100">
             <div className="max-w-7xl mx-auto py-24 px-8">
                 <header className="mb-12">
-                    <h2 className="text-4xl font-bold text-center text-gray-800 mb-2">Your Classes!</h2>
+                    <h2 className="text-4xl font-extrabold text-center text-blue-800 mb-2">Your Classes!</h2>
                     <p className="text-lg text-center text-gray-600">Here’s an overview of your academic activities.</p>
                 </header>
 

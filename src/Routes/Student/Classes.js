@@ -32,7 +32,7 @@ function Classes() {
     return (
         <div className="min-h-screen bg-gray-100 py-10 px-8">
             <div className="w-fit mx-auto bg-white shadow-lg rounded-lg p-8">
-                <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Class Schedule</h2>
+                <h2 className="text-4xl font-extrabold text-center text-blue-800 mb-2">Class Schedule</h2>
                 {isLoading ? (
                     <div className="flex justify-center">
                         <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>

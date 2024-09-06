@@ -119,8 +119,8 @@ function CreateCollection() {
 
     return (
         <section className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100 ml-52 py-10 flex flex-col items-center">
-            <div className="max-w-4xl w-full bg-white shadow-xl rounded-lg p-8">
-                <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Manage Collections</h2>
+            <div className="max-w-5xl w-full bg-white shadow-xl rounded-lg p-8">
+                <h2 className="text-5xl font-bold text-center text-blue-800 mb-6">Manage Collections</h2>
                 <div className="mb-10">
                     <h3 className="text-2xl font-semibold text-gray-700 mb-6">Create a New Collection</h3>
                     <form onSubmit={handleSubmit} className="mb-8">

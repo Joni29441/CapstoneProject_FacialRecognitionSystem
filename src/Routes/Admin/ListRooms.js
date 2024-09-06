@@ -72,11 +72,10 @@ function ListRooms() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 py-12 flex justify-center items-center">
+        <div className="min-h-screen bg-gradient-to-r  ml-52 from-blue-50 to-blue-100 py-12 flex justify-center items-center">
             <div className="max-w-6xl w-full bg-white shadow-2xl rounded-xl p-8">
                 <h2 className="text-5xl font-bold text-center text-blue-800 mb-10">Room Management</h2>
 
-                {/* Form to Add Room */}
                 <div className="flex flex-col md:flex-row items-center mb-12">
                     <div className="w-full md:w-1/2 p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg rounded-xl md:mr-6 mb-6 md:mb-0">
                         <h3 className="text-3xl font-bold mb-4">Add a New Room</h3>
