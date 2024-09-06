@@ -50,10 +50,9 @@ const Homepage = () => {
                 </div>
             </section>
 
-            {/* Technology Stack Section */}
             <section className="bg-white py-24 text-white">
                 <div className="container mx-auto px-6 md:px-12 lg:px-24">
-                    <h2 className="text-5xl font-bold text-center mb-12">Technology Stack</h2>
+                    <h2 className="text-5xl font-bold text-center text-black mb-12">Technology Stack</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
                         <div
                             className="bg-gradient-to-r from-blue-500 to-indigo-600 p-12 rounded-xl shadow-lg transform transition-all hover:scale-105">

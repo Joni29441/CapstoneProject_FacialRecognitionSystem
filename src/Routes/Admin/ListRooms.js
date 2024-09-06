@@ -72,66 +72,83 @@ function ListRooms() {
     };
 
     return (
-        <div className="min-h-screen flex bg-gray-100">
-            <div className="flex-grow py-10 px-8 ml-64">
-                <div className="max-w-full mx-auto">
-                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">All Available Rooms</h2>
-                    <form onSubmit={handleSubmit} className="mb-8 p-6 bg-white shadow-lg rounded-lg">
-                        <h3 className="text-2xl font-semibold text-gray-800 mb-4">Add a New Room</h3>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Room Name</label>
-                            <input
-                                type="text"
-                                value={roomName}
-                                onChange={(e) => setRoomName(e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                                placeholder="Enter room name"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Timezone</label>
-                            <input
-                                type="text"
-                                value={timezone}
-                                onChange={(e) => setTimezone(e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                                placeholder="Enter timezone"
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        >
-                            Add Room
-                        </button>
-                    </form>
-                    {isLoading ? (
-                        <div className="flex mx-auto justify-center">
-                            <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9"/>
-                        </div>
-                        ) : (
-                        <div className="bg-white p-4 rounded-lg shadow-lg border-2">
-                            <h2 className="text-center text-2xl pb-3 font-bold">Available Rooms</h2>
-                            <table className="w-full mx-auto bg-white shadow-2xl border rounded-lg">
-                                <thead className="bg-blue-900 text-white">
+        <div className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 py-12 flex justify-center items-center">
+            <div className="max-w-6xl w-full bg-white shadow-2xl rounded-xl p-8">
+                <h2 className="text-5xl font-bold text-center text-blue-800 mb-10">Room Management</h2>
+
+                {/* Form to Add Room */}
+                <div className="flex flex-col md:flex-row items-center mb-12">
+                    <div className="w-full md:w-1/2 p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg rounded-xl md:mr-6 mb-6 md:mb-0">
+                        <h3 className="text-3xl font-bold mb-4">Add a New Room</h3>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label className="block text-lg font-semibold">Room Name</label>
+                                <input
+                                    type="text"
+                                    value={roomName}
+                                    onChange={(e) => setRoomName(e.target.value)}
+                                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent"
+                                    placeholder="Enter room name"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-lg font-semibold">Timezone</label>
+                                <input
+                                    type="text"
+                                    value={timezone}
+                                    onChange={(e) => setTimezone(e.target.value)}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-black focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent"
+                                    placeholder="Enter timezone"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full px-6 py-3 bg-white text-blue-800 font-bold rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none transition duration-150"
+                            >
+                                Add Room
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="w-full md:w-1/2 p-6 mb-32 bg-gray-100 shadow-lg rounded-xl">
+                        <h3 className="text-3xl font-bold text-blue-800 mb-4">Instructions</h3>
+                        <ul className="list-disc list-inside text-lg text-gray-700">
+                            <li>Ensure the room name is unique and descriptive.</li>
+                            <li>Provide a valid timezone to accurately track activities.</li>
+                            <li>Click "Add Room" to create the room and add it to the list below.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Available Rooms Table */}
+                {isLoading ? (
+                    <div className="flex justify-center">
+                        <OrbitProgress color="#3161cc" size="medium" text="Loading" textColor="#0b4ef9" />
+                    </div>
+                ) : (
+                    <div className="bg-white p-6 rounded-lg shadow-xl">
+                        <h3 className="text-4xl font-semibold text-center text-blue-800 mb-6">Available Rooms</h3>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full text-left bg-white shadow-lg rounded-lg">
+                                <thead className="bg-gradient-to-r from-blue-600 to-blue-900 text-white">
                                 <tr>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Room ID</th>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Room Name</th>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Timezone</th>
-                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                                    <th className="px-6 py-3 font-semibold">Room ID</th>
+                                    <th className="px-6 py-3 font-semibold">Room Name</th>
+                                    <th className="px-6 py-3 font-semibold">Timezone</th>
+                                    <th className="px-6 py-3 font-semibold">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody className="text-gray-700">
                                 {rooms.length > 0 ? (
                                     rooms.map((room, index) => (
-                                        <tr key={index} className="hover:bg-gray-200 odd:bg-gray-100 even:bg-white">
-                                            <td className="py-3 px-4">{index + 1}</td>
-                                            <td className="py-3 px-4">{room.name}</td>
-                                            <td className="py-3 px-4">{room.timezone}</td>
-                                            <td className="py-3 px-4">
+                                        <tr key={index} className="hover:bg-gray-100 transition duration-150">
+                                            <td className="px-6 py-4">{index + 1}</td>
+                                            <td className="px-6 py-4">{room.name}</td>
+                                            <td className="px-6 py-4">{room.timezone}</td>
+                                            <td className="px-6 py-4">
                                                 <button
                                                     onClick={() => handleDelete(room.uuid)}
-                                                    className="py-2 px-4 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                    className="px-4 py-2 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:bg-red-700 transition ease-in-out"
                                                 >
                                                     Delete
                                                 </button>
@@ -140,7 +157,7 @@ function ListRooms() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="3" className="text-center py-4">
+                                        <td colSpan="4" className="text-center py-6 text-gray-500">
                                             No rooms found in the database.
                                         </td>
                                     </tr>
@@ -148,12 +165,13 @@ function ListRooms() {
                                 </tbody>
                             </table>
                         </div>
-                    )}
-                </div>
-                <ToastContainer/>
+                    </div>
+                )}
             </div>
+            <ToastContainer />
         </div>
     );
+
 }
 
 export default ListRooms;
