@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {FaHome, FaCalendarAlt, FaSignOutAlt, FaBars, FaTimes, FaBell} from 'react-icons/fa';
 import {CgProfile} from "react-icons/cg";
+import {TbFileDollar} from "react-icons/tb";
 
 const StudentNavbar = ({ handleLogout }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +40,11 @@ const StudentNavbar = ({ handleLogout }) => {
                         <li>
                             <Link to="/Profile" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">
                                 <CgProfile  className="inline mr-2 text-2xl" />Profile
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Finances" className="block px-3 py-2 rounded-md text-white hover:bg-blue-700 transition duration-300">
+                                <TbFileDollar  className="inline mr-2 text-2xl" />Finances
                             </Link>
                         </li>
                         <li>

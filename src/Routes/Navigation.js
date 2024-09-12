@@ -27,6 +27,10 @@ import Schedule from "./Professor/Schedule";
 import {UserContext} from "../Context/UserContext";
 import RemoveStudentFromCollection from "./Admin/RemoveStudentFromCollection";
 import Profile from "./Student/Profile";
+import Finances from "./Student/Finances";
+import FinancesInfo from "./Student/FinancesInfo";
+import Confirmation from "./Student/Confirmation";
+import FinancesPayment from "./Student/FinancesPayment";
 
 
 function Navigation() {
@@ -149,6 +153,10 @@ function Navigation() {
                 <Route path="/AddStudentToCollection" element={<AddStudentToCollection/>}/>
                 <Route path="/RemoveStudentFromCollection" element={<RemoveStudentFromCollection/>}/>
                 <Route path="/Profile" element={<Profile/>}/>
+                <Route path="/Finances" element={<Finances/>}/>
+                <Route path="/FinancesInfo" element={<FinancesInfo/>}/>
+                <Route path="/FinancesPayment" element={<FinancesPayment/>}/>
+                <Route path="/Confirmation" element={<Confirmation/>}/>
             </Routes>
             {isAdmin || <Footer/> }
         </>

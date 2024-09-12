@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaReact, FaServer, FaCloud } from 'react-icons/fa';
+import {FaReact, FaServer, FaCloud} from 'react-icons/fa';
 
 const Homepage = () => {
     return (

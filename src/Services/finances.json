@@ -1,0 +1,30 @@
+[
+  {
+    "transactionNo": "TID3872XG9",
+    "transactionId": "20ead212",
+    "amount": "900",
+    "description": "Tuition",
+    "term": "Fall-23/24"
+  },
+  {
+    "transactionNo": "TLK3372ZX9",
+    "transactionId": "20eg23123",
+    "amount": "900",
+    "description": "Tuition",
+    "term": "Spring-23/24"
+  },
+  {
+    "transactionNo": "KXK4212ZO",
+    "transactionId": "20kf94a4q3",
+    "amount": "900",
+    "description": "Tuition",
+    "term": "Spring-22/23"
+  },
+  {
+    "transactionNo": "LTXM00012",
+    "transactionId": "41ldas52q4q3",
+    "amount": "20",
+    "description": "Exam fee",
+    "term": "Spring-22/23"
+  }
+]
